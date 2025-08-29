@@ -1,7 +1,9 @@
 .venv/
+.env
 __pycache__/
 utils/__pycache__/
 evalmetrics/__pycache__/
 .DS_Store
 utils/.DS_Store
 evalmetrics/.DS_Store
+ignore/

@@ -155,3 +155,193 @@ EXTRACTED TEXT:
         print(f"Prescription formatting error: {str(e)}")
         # Fallback to raw text if LLM fails
         return f"**Extracted Text:**\n{extracted_text}"
+    
+
+
+def analyze_personal_allergies_with_llm(extracted_text, allergies):
+    """
+    Personalize the alerts on the patients allergies into structured, readable summary
+    """
+    try:
+        llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=os.getenv("OPENAI_API_KEY"),
+            temperature=0.0  # Zero temperature for consistent formatting
+        )
+        
+        # Detailed prompt for structured formatting
+        prompt_template = ChatPromptTemplate.from_messages([
+            ("system", """You are a medical expert. Analyze the extracted prescription text in order to provide information about the interactions with the allergies the patient has.
+
+             The patient has the following allergies: {allergies}           
+
+ORGANIZE THE INFORMATION AS FOLLOWS:
+**Prescription Details**
+Create a table for medications:
+| Medication | Dosage | Quantity | Instructions |
+|------------|--------|----------|-------------|
+| [Drug 1] | [Strength] | [Amount] | [Directions] |
+| [Drug 2] | [Strength] | [Amount] | [Directions] |
+
+**Allergies**
+- Current Allergy Information: [Extracted allergy information from {allergies}]
+
+**Interaction with Allergies**
+- [Extracted Interaction information ]
+             
+**Recommendations**
+- [Extracted Recommendations information ]
+             
+**Conclusion**
+- [Extracted Conclusion information ]
+
+RULES:
+1. Use clean markdown formatting
+2. Be extremely accurate - only include information found in the text
+3. If information is missing, leave it blank rather than guessing
+4. Make it easy for a patient to understand
+5. Use professional medical terminology
+
+EXTRACTED TEXT:
+{extracted_text}. """)
+        ])
+        
+        chain = prompt_template | llm | StrOutputParser()
+        formatted_output = chain.invoke({"extracted_text": extracted_text, "allergies":allergies})
+        
+        return formatted_output
+        
+    except Exception as e:
+        print(f"Prescription formatting error: {str(e)}")
+        # Fallback to raw text if LLM fails
+        return f"**Extracted Text:**\n{extracted_text}"
+    
+
+
+def analyze_personal_preexistingconditions_with_llm(extracted_text, preexistingconditions):
+    """
+    Personalize the alerts on the patients allergies into structured, readable summary
+    """
+    try:
+        llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=os.getenv("OPENAI_API_KEY"),
+            temperature=0.0  # Zero temperature for consistent formatting
+        )
+        
+        # Detailed prompt for structured formatting
+        prompt_template = ChatPromptTemplate.from_messages([
+            ("system", """You are a medical expert. Analyze the extracted prescription text in order to provide information about the interactions with the pre existing conditions the patient has.
+
+The patient has the following pre exising conditions: {preexistingconditions}           
+             
+ORGANIZE THE INFORMATION AS FOLLOWS:
+**Prescription Details**
+Create a table for medications:
+| Medication | Dosage | Quantity | Instructions |
+|------------|--------|----------|-------------|
+| [Drug 1] | [Strength] | [Amount] | [Directions] |
+| [Drug 2] | [Strength] | [Amount] | [Directions] |
+
+**Pre Existing Conditions**
+- Current Pre Existing Conditions Information: [Extracted allergy information from {preexistingconditions}]
+
+**Interaction with Pre Existing Conditions**
+- [Extracted Interaction information ]
+             
+**Recommendations**
+- [Extracted Recommendations information ]
+             
+**Conclusion**
+- [Extracted Conclusion information ]
+
+RULES:
+1. Use clean markdown formatting
+2. Be extremely accurate - only include information found in the text
+3. If information is missing, leave it blank rather than guessing
+4. Make it easy for a patient to understand
+5. Use professional medical terminology             
+
+EXTRACTED TEXT:
+{extracted_text}. """)
+        ])
+        
+        chain = prompt_template | llm | StrOutputParser()
+        formatted_output = chain.invoke({"extracted_text": extracted_text, "preexistingconditions":preexistingconditions})
+        
+        return formatted_output
+        
+    except Exception as e:
+        print(f"Prescription formatting error: {str(e)}")
+        # Fallback to raw text if LLM fails
+        return f"**Extracted Text:**\n{extracted_text}"
+    
+
+
+def analyze_personal_drug_interactions_with_llm(extracted_text, drug_interactions):
+    """
+    Personalize the alerts on the patients allergies into structured, readable summary
+    """
+    try:
+        llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            api_key=os.getenv("OPENAI_API_KEY"),
+            temperature=0.0  # Zero temperature for consistent formatting
+        )
+        
+        # Detailed prompt for structured formatting
+        prompt_template = ChatPromptTemplate.from_messages([
+            ("system", """You are a medical expert. Analyze the extracted prescription text and provide information about the interactions with the current drugs the patient takes.
+
+**Drug Interactions Alerts**
+The patient takes the following drugs: {drug_interactions}           
+- [Extracted Drug Interactions information ]
+
+ORGANIZE THE INFORMATION AS FOLLOWS:
+**Prescription Details**
+Create a table for medications:
+| Medication | Dosage | Quantity | Instructions |
+|------------|--------|----------|-------------|
+| [Drug 1] | [Strength] | [Amount] | [Directions] |
+| [Drug 2] | [Strength] | [Amount] | [Directions] |
+
+**Current Medication Information**
+- Current Medication Information: [Extracted medication from {drug_interactions}]
+
+**Interaction with Current Medications**
+- [Extracted Interaction information ]
+             
+**Recommendations**
+- [Extracted Recommendations information ]
+             
+**Conclusion**
+- [Extracted Conclusion information ]
+
+RULES:
+1. Use clean markdown formatting
+2. Be extremely accurate - only include information found in the text
+3. If information is missing, leave it blank rather than guessing
+4. Make it easy for a patient to understand
+5. Use professional medical terminology        
+
+RULES:
+1. Use clean markdown formatting
+2. Be extremely accurate - only include information found in the text
+3. If information is missing, leave it blank rather than guessing
+4. Make it easy for a patient to understand
+5. Use professional medical terminology
+
+EXTRACTED TEXT:
+{extracted_text}. """)
+        ])
+        
+        chain = prompt_template | llm | StrOutputParser()
+        formatted_output = chain.invoke({"extracted_text": extracted_text, "drug_interactions":drug_interactions})
+        
+        return formatted_output
+        
+    except Exception as e:
+        print(f"Prescription formatting error: {str(e)}")
+        # Fallback to raw text if LLM fails
+        return f"**Extracted Text:**\n{extracted_text}"
+    
